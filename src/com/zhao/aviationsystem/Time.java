@@ -29,5 +29,30 @@ public class Time implements Comparable<Time> {
 		int num=(int) (this.count-o.getCount());
 		return num;
 	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public int getMinute() {
+		return minute;
+	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return year+"/"+month+"/"+day+"  "+hour+":"+minute;
+	}
 }
