@@ -35,35 +35,6 @@ public class Flight implements Comparable<Flight> {
 	}
 	
 	/**
-	 * 构造一个航班
-	 * @param orderCount 已经被订的数量 
-	 */
-/*	private Flight(String id,int amount,String origin,String destination,Time time,int orderCount ){
-		this.id=id;
-		this.amount=amount;
-		this.origin=origin;
-		this.destination=destination;
-		this.orderCount=orderCount;		
-		this.time=time;
-		allUser=new TreeMap<Integer,User>();
-	}
-*/	/**
-	 * 新建一个航班实例
-	 * @param id 航班班次
-	 * @param amount 航班核定载客数量
-	 * @param orderCount 已经被顶票数量
-	 * @return 一个新的航班实例
-	 */
-/*	public static Flight NewInstance(String id,int amount,String origin,String destination,Time time,int orderCount){
-		if(orderCount>amount){
-			new OrderCountOutOfAmount();
-			return null;
-		}
-		Flight flight= new Flight(id,amount,origin,destination,time,orderCount);
-		Flight.allFlight.put(id, flight);//添加到图中
-		return flight;
-	}*/
-	/**
 	 * 新建一个航班实例<br/>
 	 * 检测是否含有重复的航班名称
 	 * @param id 航班班次
@@ -151,9 +122,43 @@ public class Flight implements Comparable<Flight> {
 	public String getDestination() {
 		return destination;
 	}
+	/**
+	 * 对allFlight操作
+	 * 元素是否存在在列表中
+	 */
+	public static  boolean  containsKey(String id){
+		return allFlight.containsKey(id);
+	}
+	/**
+	 * 输入航班班次得到该航班实例
+	 */
+	public static Flight getFlight(String id){
+		if(containsKey(id))
+			return allFlight.get(id);
+		System.err.println("无该趟航班");
+		return null;
+	}
+	/**
+	 * 显示该id航班
+	 */
+	public static void disFlight(String id){
+		Flight flight=getFlight(id);
+		if(flight!=null){
+			System.out.println(flight);
+		}
+	}
+	/**
+	 * 显示所有航班信息
+	 */
+	public static void disAllFlight(){
+		
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "航班:"+this.id+"        起点:"+this.origin+"       目的地:"+this.destination+"       时间:"+time;
+		return "航班:"+this.id+"        起点:"+this.origin+"       目的地:"
+				+this.destination+"       时间:"+time+"      剩余票量:"+(this.amount-this.orderCount);
 	}
+	
+	
 }

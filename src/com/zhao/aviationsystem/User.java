@@ -1,5 +1,6 @@
 package com.zhao.aviationsystem;
 
+import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
@@ -71,4 +72,32 @@ public class User implements Comparable<User>{
 		return name;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "姓名:"+this.name+"        ID:"+this.id ;
+	}
+	/**
+	 * 显示该乘客所订的所有航班
+	 */
+	public void disAllFlight(){
+		Iterator<String> it= allFlight.keySet().iterator();
+		while(it.hasNext()){
+			System.out.println(allFlight.get(it.next()));
+		}
+	}
+	public static User getUser(int id){
+		if(allUser.containsKey(id))
+			return allUser.get(id);
+		System.err.println("无该乘客");
+		return null;
+	}
+	public static void disUser(int id){
+		User user=getUser(id);
+		if(user!=null){
+			System.out.println(user);
+			System.out.println("该乘客订的飞机:");
+			user.disAllFlight();
+		}
+	}
 }
