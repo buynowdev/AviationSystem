@@ -21,9 +21,20 @@ public class Query {
 			opt=meanOpt();
 			switch (opt) {
 			case 1:
-				queryFlight();
+				queryFlight();//查询一趟航班信息
 				break;
-
+			case 2:
+				queryUser();//查询用户信息
+				break;
+			case 3:
+				queryAllFlight();//显示所有航班信息
+				break;
+			case 4:
+				queryAllUser();//显示所有用户信息
+				break;
+			case 5:
+				queryFligthLine();
+				break;
 			default:
 				break;
 			}
@@ -32,9 +43,7 @@ public class Query {
 	/**
 	 * 通过输入航班班次 查询某趟航班
 	 */
-	private static void queryFlight() {
-		// TODO Auto-generated method stub
-		int opt=1;
+	public static void queryFlight() {
 		String str="y";
 		while (true) {
 			System.out.println("请输入航班班次:");
@@ -46,13 +55,37 @@ public class Query {
 				break;
 		}
 	}
-	
+	/**
+	 * 显示所有航班
+	 */
+	public static void queryAllFlight(){
+		Flight.disAllFlight();
+	}
 	/**
 	 * 查询某个乘客
-	 * @return
+	 * @return void
 	 */
 	public static void queryUser(){
-		
+		int id=sc.nextInt();
+		User.disUser(id);
+	}
+	/**
+	 * 显示所有乘客的信息
+	 * @return void
+	 */
+	public static void queryAllUser(){
+		User.disAllUser();
+	}
+	/**
+	 * 查询某条航线上的航班
+	 * @return
+	 */
+	public static void queryFligthLine(){
+		System.out.println("请输入出发地:");
+		String origin=sc.next();
+		System.out.println("请输入目的地:");
+		String destination=sc.next();
+		Flight.disFlightLine(origin, destination);
 	}
 	public static int meanOpt(){
 		int opt=1;

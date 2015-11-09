@@ -5,6 +5,8 @@ package com.zhao.aviationsystem;
  *
  */
 public class OrderCountOutOfAmount extends Exception {
+	private static final long serialVersionUID = 4468815113146040574L;
+
 	public OrderCountOutOfAmount() {
 		// TODO Auto-generated constructor stub
 		super("航班票量不足");

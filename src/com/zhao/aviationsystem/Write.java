@@ -10,8 +10,10 @@ import java.util.Scanner;
  */
 public class Write {
 	static Scanner sc;
-	public static void write(){
+	static{
 		sc=new Scanner(System.in);
+	}
+	public static void write(){
 		while(true){
 			int opt=opt();
 			switch (opt) {
@@ -20,6 +22,12 @@ public class Write {
 				break;
 			case 2:
 				addFlightInfo();//添加航班信息
+				break;
+			case 3:
+				deleteUser();//删除用户信息
+				break;
+			case 4:
+				deleteFlight();//删除航班信息
 				break;
 			case 0:
 				System.out.println("----录入结束-----");
@@ -92,6 +100,19 @@ public class Write {
 		}
 	}
 	/**
+	 * 删除用户
+	 */
+	public static void deleteUser(){
+		int id=sc.nextInt();
+		User.deleteUser(id);
+	}
+	/**
+	 * 删除航班
+	 */
+	public static void deleteFlight(){
+		Flight.deleteFlight(sc.next());
+	}
+	/**
 	 * 选项菜单
 	 * @return 选项值
 	 */
@@ -99,6 +120,8 @@ public class Write {
 		int opt;
 		System.out.println("1.添加用户信息;");
 		System.out.println("2.添加航班信息;");
+		System.out.println("3.删除用户信息;");
+		System.out.println("4.删除航班信息;");
 		System.out.println("0.返回;");
 		opt=sc.nextInt();
 		return opt;

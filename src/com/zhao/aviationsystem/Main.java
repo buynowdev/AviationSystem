@@ -9,8 +9,10 @@ import java.util.Scanner;
  */
 public class Main {
 	static Scanner sc;
-	public static void main(String[] args) {
+	static {
 		sc=new Scanner(System.in);
+	}
+	public static void main(String[] args) {
 		
 		mainMenu();
 	}
@@ -23,10 +25,19 @@ public class Main {
 			opt=menuOpt();
 			switch (opt) {
 			case 1:
-				
+				Query.query();
+				break;
+			case 2:
+				OrderFlight.orderFlight();
+				break;
+			case 3:
+				DeleteFlight.deleteFlight();
 				break;
 			case 4:
 				Write.write();
+				break;
+			case 5:
+				System.err.println("需要管理员权限!");
 				break;
 			case 0:
 				/*
@@ -50,7 +61,7 @@ public class Main {
 		System.out.println("* 飞 机 订 票 系 统 * ");
 		System.out.println("****************");
 		System.out.println("*功能菜单:             *");
-		System.out.println("*1.查询航线信息    *");
+		System.out.println("*1.查询                  *");
 		System.out.println("*2.订票                  *");
 		System.out.println("*3.退票                  *");
 		System.out.println("*4.录入                  *");

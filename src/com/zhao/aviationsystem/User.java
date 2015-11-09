@@ -48,7 +48,13 @@ public class User implements Comparable<User>{
 	 * @param flight
 	 * @return 订购成功返回true 失败返回false
 	 */
-	public boolean addFlight(Flight flight){
+	public boolean orderFlight(String id){
+		Flight flight;
+		if(!(Flight.containsKey(id))){
+			System.err.println("无此航班");
+			return false;
+		}
+		flight=Flight.getFlight(id);
 		if(allFlight.containsKey(flight.getId())){
 			System.err.println("请勿重复买票!");
 			return false;
@@ -92,6 +98,10 @@ public class User implements Comparable<User>{
 		System.err.println("无该乘客");
 		return null;
 	}
+	/**
+	 * 显示一个用户的信息
+	 * @param id
+	 */
 	public static void disUser(int id){
 		User user=getUser(id);
 		if(user!=null){
@@ -99,5 +109,52 @@ public class User implements Comparable<User>{
 			System.out.println("该乘客订的飞机:");
 			user.disAllFlight();
 		}
+	}
+	/**
+	 * 显示所有用户的信息 包括所订的飞机
+	 */
+	public static void disAllUser(){
+		Iterator<Integer> it=allUser.keySet().iterator();
+		while(it.hasNext()){
+			User user=allUser.get(it.next());
+			System.out.println(user);
+			Iterator<String> it2=user.allFlight.keySet().iterator();
+			System.out.print("    该用户订的飞机:");
+			while(it2.hasNext()){
+				System.out.print("["+user.allFlight.get(it2.next()).getId()+"]    ");
+			}
+			System.out.println();
+		}
+	}
+	/**
+	 * 删除一个用户
+	 * @param id
+	 * @return
+	 */
+	public static boolean deleteUser(int id){
+		if(allUser.containsKey(id)){
+			allUser.remove(id);
+			System.out.println("删除成功!");
+			return true;
+		}
+		System.err.println("错误:无此用户!");
+		return false;
+	}
+	/**
+	 * 退票
+	 */
+	public boolean deleteFlight(String id){
+		if(Flight.allFlight.containsKey(id)){
+			if(this.allFlight.containsKey(id)){
+				this.allFlight.remove(id);
+				Flight.allFlight.get(id).deleteUser(this);
+				System.out.println("删除成功!");
+				return true;
+			}
+			System.err.println("该用户未订该趟航班!");
+			return false;
+		}
+		System.out.println("无该航班!");
+		return false;
 	}
 }

@@ -1,7 +1,7 @@
 package com.zhao.aviationsystem;
 
+import java.util.Iterator;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * 航班类
@@ -68,7 +68,7 @@ public class Flight implements Comparable<Flight> {
 		/**
 		 * 检测是否有重复的乘客
 		 */
-		if (!this.allUser.containsKey(user.getId())&&(orderCount<amount)) {
+		if ((!Flight.allUser.containsKey(user.getId()))&&(orderCount<amount)) {
 			allUser.put(user.getId(), user);
 			orderCount++;
 			return true;
@@ -80,11 +80,11 @@ public class Flight implements Comparable<Flight> {
 	/**
 	 * 减少乘客
 	 */
-	public void DeleteUser(User user){
+	public void deleteUser(User user){
 		/**
 		 * 检查是否有该乘客
 		 */
-		if(this.allUser.containsKey(user.getId())){
+		if(User.allUser.containsKey(user.getId())){
 			allUser.remove(user.getId());
 			orderCount--;
 		}
@@ -151,7 +151,41 @@ public class Flight implements Comparable<Flight> {
 	 * 显示所有航班信息
 	 */
 	public static void disAllFlight(){
-		
+		Iterator<String> it=allFlight.keySet().iterator();
+		while (it.hasNext()) {
+			System.out.println(allFlight.get(it.next()));
+		}
+	}
+	/**
+	 * 查询某条航线上的航班
+	 */
+	public static void disFlightLine(String origin,String destination){
+		Iterator<String> it=allFlight.keySet().iterator();
+		int count=0;
+		while(it.hasNext()){
+			Flight flight=allFlight.get(it.next());
+			if(flight.getOrigin().equals(origin)&&flight.getDestination().equals(destination)){
+				System.out.println(flight);
+				count=1;
+			}
+		}
+		if(count==0){
+			System.out.println("抱歉!无此航线的航班.");
+		}
+	}
+	/**
+	 * 删除一趟航班
+	 * @param id
+	 * @return
+	 */
+	public static boolean  deleteFlight(String id){
+		if(allFlight.containsKey(id)){
+			allFlight.remove(id);
+			System.out.println("删除航班成功!");
+			return true;
+		}
+		System.err.println("错误:无此航班!");
+		return false;
 	}
 	@Override
 	public String toString() {
@@ -159,6 +193,5 @@ public class Flight implements Comparable<Flight> {
 		return "航班:"+this.id+"        起点:"+this.origin+"       目的地:"
 				+this.destination+"       时间:"+time+"      剩余票量:"+(this.amount-this.orderCount);
 	}
-	
 	
 }
