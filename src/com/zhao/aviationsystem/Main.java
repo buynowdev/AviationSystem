@@ -11,20 +11,29 @@ public class Main {
 	static Scanner sc;
 	public static void main(String[] args) {
 		sc=new Scanner(System.in);
-		menuOpt();
+		
+		mainMenu();
 	}
 	/**
 	 * 主菜单调用各种功能函数
 	 */
 	public static void mainMenu(){
-		int opt=0;
-		while(opt!=9){
+		int opt=1;
+		while(opt!=0){
 			opt=menuOpt();
 			switch (opt) {
 			case 1:
 				
 				break;
-
+			case 4:
+				Write.write();
+				break;
+			case 0:
+				/*
+				 * 退出前加入保持数据
+				 * 使用Object流将用户表和飞机表全部保存到文件
+				 */
+				return ;
 			default:
 				break;
 			}

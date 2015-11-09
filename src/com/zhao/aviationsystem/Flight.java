@@ -73,6 +73,7 @@ public class Flight implements Comparable<Flight> {
 	public static Flight newInstance(String id,int amount,String origin,String destination,Time time){
 		if(allFlight.containsKey(id)){
 			System.err.println("航班名称重复 请重试!");
+			return null;
 		}
 		Flight flight= new Flight(id,amount,origin,destination,time);
 		Flight.allFlight.put(id, flight);

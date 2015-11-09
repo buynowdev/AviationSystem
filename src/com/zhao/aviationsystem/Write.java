@@ -13,13 +13,19 @@ public class Write {
 	public static void write(){
 		sc=new Scanner(System.in);
 		while(true){
-			switch (opt()) {
+			int opt=opt();
+			switch (opt) {
 			case 1:
 				addUserInfo();//添加用户信息
 				break;
 			case 2:
 				addFlightInfo();//添加航班信息
+				break;
 			case 0:
+				System.out.println("----录入结束-----");
+				/*
+				 * 此处加入数据保存
+				 */
 				return ;
 			default:
 				System.err.println("输入错误 请重试!");
@@ -34,15 +40,15 @@ public class Write {
 		/**
 		 * 通过循环加入航班信息 输入N 或 n 时结束录入
 		 */
-		while(!(str.equals("N")&&str.equals("n"))){
+		while(!(str.equals("N")||str.equals("n"))){
 			System.out.println("请输入航班名称:");
-			String id=sc.nextLine();
+			String id=sc.next();
 			System.out.println("请输入航班荷载人数");
 			int amount=sc.nextInt();
 			System.out.println("请输入出发城市:");
-			String origin=sc.nextLine();
+			String origin=sc.next();
 			System.out.println("请输入目的地:");
-			String destination=sc.nextLine();
+			String destination=sc.next();
 			System.out.println("请输入起飞日期和时间:");
 			System.out.println("年:");
 			int year=sc.nextInt();
@@ -57,22 +63,33 @@ public class Write {
 			
 			Time time=new Time(year, month, day, hour, minute);
 			Flight flight=Flight.newInstance(id, amount, origin, destination, time);
-			if(Flight.allFlight.containsKey(flight.getId())){
+			if(flight==null){
 				System.err.println("航班加入重复!");
 			}else{
-				Flight.allFlight.put(flight.getId(), flight);
 				System.out.println("加入"+flight);
 				System.out.println("录入成功!");
 			}
-			System.out.println("是否继续添加航班信息?(结束录入输入N/n");
-			str=sc.nextLine();
+			System.out.println("是否继续添加航班信息?(结束录入输入N/n)");
+			str=sc.next();
 		}
 	}
 	/**
 	 * 添加乘客信息
 	 */
 	private static void addUserInfo() {
-		
+		String str="y";//用来判断是否继续循环
+		/**
+		 * 当用户输入N 或 n 时结束循环
+		 */
+		while(!(str.equals("N")||str.equals("n"))){
+			System.out.println("请输入用户姓名:");
+			String name=sc.next();
+			System.out.println("请输入用户id");
+			int id=sc.nextInt();
+			User.newInstance(name, id);
+			System.out.println("是否继续添加 (结束录入请输入n):");
+			str=sc.next();
+		}
 	}
 	/**
 	 * 选项菜单

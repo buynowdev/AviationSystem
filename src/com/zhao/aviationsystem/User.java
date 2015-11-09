@@ -8,14 +8,37 @@ import java.util.TreeMap;
  *
  */
 public class User implements Comparable<User>{
+	public static TreeMap<Integer,User> allUser;
 	private String name;//用户姓名
 	private int id;//用户id 不可重复
 	public TreeMap<String,Flight> allFlight; //用户所定航班的班次
 	
-	public User(String name,int id) {
+	static {
+		allUser= new TreeMap<Integer,User>();//初始化用户列表
+	}
+	private User(String name,int id) {
 		this.name=name;
 		this.id=id;
 		allFlight=new TreeMap<String,Flight>();
+	}
+	/**
+	 * 添加用户
+	 * 并检测是否有重复的id
+	 * 如果未重复加入用户列表
+	 * @param name 用户姓名
+	 * @param id 用户id
+	 * @return 用户实例
+	 */
+	public static User newInstance(String name,int id){
+		if(allUser.containsKey(id)){
+			System.err.println("用户添加失败,用户id重复;");
+			return null;
+		}else{
+			User user=new User(name,id);
+			allUser.put(id, user);
+			System.out.println("添加用户成功!");
+			return user;
+		}
 	}
 	/**
 	 * 订购一趟航班
