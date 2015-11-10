@@ -103,6 +103,8 @@ public class Write {
 	 * 删除用户
 	 */
 	public static void deleteUser(){
+		Query.queryAllUser();//显示所有用户
+		System.out.println("选择要删除的用户");
 		int id=sc.nextInt();
 		User.deleteUser(id);
 	}
@@ -110,6 +112,8 @@ public class Write {
 	 * 删除航班
 	 */
 	public static void deleteFlight(){
+		Query.queryAllFlight();//显示所有的航班
+		System.out.println("请选择要删除的航班:");
 		Flight.deleteFlight(sc.next());
 	}
 	/**

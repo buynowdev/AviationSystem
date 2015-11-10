@@ -1,10 +1,13 @@
 package com.zhao.aviationsystem;
+
+import java.io.Serializable;
+
 /**
  * 时间类 记录时间
  * @author zhao
- *
  */
-public class Time implements Comparable<Time> {
+public class Time implements Comparable<Time>  ,Serializable{
+	private static final long serialVersionUID = 1L;
 	private int year;
 	private int month;
 	private int day;

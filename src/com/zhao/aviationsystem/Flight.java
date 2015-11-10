@@ -1,5 +1,6 @@
 package com.zhao.aviationsystem;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -9,7 +10,9 @@ import java.util.TreeMap;
  * @日期 2015-11-8 17:24
  * 用newInstance()方法来创建实例
  */
-public class Flight implements Comparable<Flight> {
+public class Flight implements Comparable<Flight>,Serializable {
+
+	private static final long serialVersionUID = 1L;
 	public  static TreeMap<String,Flight> allFlight;//所有的航班
 	public static TreeMap<Integer,User> allUser;//所有订该航班的乘客
 	private String id;//航班的班次名称 

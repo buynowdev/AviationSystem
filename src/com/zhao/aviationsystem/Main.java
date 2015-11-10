@@ -1,6 +1,14 @@
 package com.zhao.aviationsystem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * 主类
@@ -8,13 +16,21 @@ import java.util.Scanner;
  *
  */
 public class Main {
+	static File fileUser=new File("./src/com/zhao/aviationsystem/User.log");
+	static File fileFlight=new File("./src/com/zhao/aviationsystem/Flight.log");
+	
 	static Scanner sc;
 	static {
 		sc=new Scanner(System.in);
 	}
 	public static void main(String[] args) {
-		
+		/* 启动前读取数据
+		 * 退出前加入保持数据
+		 * 使用Object流将用户表和飞机表全部保存到文件
+		 */
+		read();
 		mainMenu();
+		save();
 	}
 	/**
 	 * 主菜单调用各种功能函数
@@ -40,15 +56,80 @@ public class Main {
 				System.err.println("需要管理员权限!");
 				break;
 			case 0:
-				/*
-				 * 退出前加入保持数据
-				 * 使用Object流将用户表和飞机表全部保存到文件
-				 */
 				return ;
 			default:
 				break;
 			}
 		}
+	}
+	/**
+	 * 保存数据
+	 */
+	public static void save(){
+		FileOutputStream fosUser;
+		FileOutputStream fosFlight;
+		ObjectOutputStream oosUser;
+		ObjectOutputStream oosFlight;
+		try {
+			fosUser=new FileOutputStream(fileUser);
+			fosFlight=new FileOutputStream(fileFlight);
+			oosUser=new ObjectOutputStream(fosUser);
+			oosFlight=new ObjectOutputStream(fosFlight);
+			oosUser.writeObject(User.allUser);
+			oosFlight.writeObject(Flight.allFlight);
+			oosFlight.flush();
+			oosUser.flush();
+			oosFlight.close();
+			oosUser.close();
+			fosUser.close();
+			fosFlight.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * 读取数据
+	 */
+	public static void read(){
+		FileInputStream fisUser;
+		FileInputStream fisFlight;
+		ObjectInputStream oisUser;
+		ObjectInputStream oisFlight;
+		try {
+			fisUser=new FileInputStream(fileUser);
+			oisUser=new ObjectInputStream(fisUser);
+			@SuppressWarnings("unchecked")
+			TreeMap<Integer,User> allUser=(TreeMap<Integer,User>)oisUser.readObject();
+			if(allUser!=null){
+				System.out.println("========乘客数据导入成功=======");
+				User.allUser=allUser;
+			}
+			oisUser.close();
+			fisUser.close();
+			
+			fisFlight=new FileInputStream(fileFlight);
+			oisFlight=new ObjectInputStream(fisFlight);
+			@SuppressWarnings("unchecked")
+			TreeMap<String,Flight> allFlight=(TreeMap<String,Flight>)oisFlight.readObject();
+			if(allFlight!=null){
+				System.out.println("========航班数据导入成功=======");
+				Flight.allFlight=allFlight;
+			}
+			oisFlight.close();
+			fisFlight.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	/**
 	 * 菜单选项
@@ -73,3 +154,4 @@ public class Main {
 		return opt;
 	}
 }
+

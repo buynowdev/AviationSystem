@@ -1,5 +1,6 @@
 package com.zhao.aviationsystem;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -8,7 +9,9 @@ import java.util.TreeMap;
  * @author zhao
  *
  */
-public class User implements Comparable<User>{
+public class User implements Comparable<User>,Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	public static TreeMap<Integer,User> allUser;
 	private String name;//用户姓名
 	private int id;//用户id 不可重复
